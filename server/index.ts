@@ -26,7 +26,7 @@ const context: Context = {
 
 const server = new ApolloServer({
   typeDefs: schema,
-  resolvers,
+  resolvers: resolvers as any,
   context
 });
 

@@ -1,6 +1,8 @@
 import { characters, Character } from "../data/characters";
 
-export const getAll = (sortDirection: "ASC" | "DESC" = "ASC"): Character[] => {
+export const getAll = (
+  sortDirection: "ASC" | "DESC" | null = "ASC"
+): Character[] => {
   return characters
     .filter(character => character.name !== "")
     .sort((characterA, characterB) => {

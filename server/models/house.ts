@@ -1,6 +1,8 @@
 import { houses, House } from "../data/houses";
 
-export const getAll = (sortDirection: "ASC" | "DESC" = "ASC"): House[] => {
+export const getAll = (
+  sortDirection: "ASC" | "DESC" | null = "ASC"
+): House[] => {
   return houses.sort((houseA, houseB) => {
     let sortModifier = 1;
     if (sortDirection === "DESC") sortModifier = -1;
