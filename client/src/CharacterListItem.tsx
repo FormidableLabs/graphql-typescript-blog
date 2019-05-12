@@ -1,8 +1,8 @@
 import React, { SyntheticEvent } from "react";
-import { Character } from "./CharacterList";
+import { CharacterInfoFragment } from "./gen-types";
 
 interface Props {
-  character: Character;
+  character: CharacterInfoFragment;
   select: (e: SyntheticEvent) => void;
 }
 

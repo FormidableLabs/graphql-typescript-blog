@@ -1,37 +1,13 @@
 import React from "react";
-import { Query } from "react-apollo";
-import { CharacterDetailQuery } from "./queries/CharacterDetailQuery";
 import "./CharacterDetail.css";
+import {
+  CharacterDetailComponent,
+  CharacterDetailFieldsFragment
+} from "./gen-types";
 
 interface Props {
   selectedCharacter?: number;
   setSelectedCharacter: (characterId: number) => void;
-}
-
-interface CharacterDetail {
-  id: string;
-  name: string;
-  playedBy: string;
-  culture?: string;
-  born?: string;
-  died?: string;
-  titles?: string[];
-  aliases?: string[];
-  father: { id: string; name: string };
-  mother: { id: string; name: string };
-  spouse: { id: string; name: string };
-  children: Array<{ id: string; name: string }>;
-  allegiances?: Array<{ name: string }>;
-  appearedIn: Array<{ name: string }>;
-  isAlive: boolean;
-  books: Array<{ id: string; name: string }>;
-}
-
-interface Data {
-  getCharacter: CharacterDetail;
-}
-interface Variables {
-  id: string;
 }
 
 const CharacterDetail: React.FC<Props> = ({
@@ -41,13 +17,10 @@ const CharacterDetail: React.FC<Props> = ({
   return (
     <div className="CharacterDetail">
       {selectedCharacter ? (
-        <Query<Data, Variables>
-          query={CharacterDetailQuery}
-          variables={{ id: String(selectedCharacter) }}
-        >
+        <CharacterDetailComponent variables={{ id: String(selectedCharacter) }}>
           {({ loading, error, data }) => {
             if (loading) return "Loading...";
-            if (error || !data) return `Error!`;
+            if (error || !data || !data.getCharacter) return `Error!`;
 
             return (
               <Detail
@@ -59,7 +32,7 @@ const CharacterDetail: React.FC<Props> = ({
               />
             );
           }}
-        </Query>
+        </CharacterDetailComponent>
       ) : (
         <>
           <h2>Character Detail</h2>
@@ -71,7 +44,7 @@ const CharacterDetail: React.FC<Props> = ({
 };
 
 const Detail: React.FC<{
-  character: CharacterDetail;
+  character: CharacterDetailFieldsFragment;
   select: (characterId: number) => void;
 }> = ({ character, select }) => {
   return (
@@ -119,7 +92,7 @@ const Detail: React.FC<{
 
 export default CharacterDetail;
 
-const renderItem = (label: string, item?: string) => {
+const renderItem = (label: string, item?: string | null) => {
   return (
     item && (
       <div>
@@ -129,7 +102,7 @@ const renderItem = (label: string, item?: string) => {
   );
 };
 
-const renderListItem = (label: string, items?: string[]) => {
+const renderListItem = (label: string, items?: string[] | null) => {
   return (
     items &&
     items.length > 0 && (
@@ -143,7 +116,7 @@ const renderListItem = (label: string, items?: string[]) => {
 const renderCharacter = (
   select: any,
   label: string,
-  item: { name: string; id: string }
+  item: { name: string; id: string } | null
 ) => {
   return (
     item && (

@@ -1,16 +1,19 @@
 import gql from "graphql-tag";
 
 export const CharacterListQuery = gql`
-  {
+  query CharacterList {
     getCharacters(sortDirection: ASC) {
-      id
-      name
-      playedBy
-      culture
-      allegiances {
-        name
-      }
-      isAlive
+      ...CharacterInfo
     }
+  }
+  fragment CharacterInfo on Character {
+    id
+    name
+    playedBy
+    culture
+    allegiances {
+      name
+    }
+    isAlive
   }
 `;
