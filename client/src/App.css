@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(5px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.Character-wrapper {
+  display: flex;
+}
+
+.Character-wrapper > div {
+  text-align: left;
+  flex-basis: 50%;
+  flex-grow: 0;
+  padding: 2em;
+}
